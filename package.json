@@ -1,0 +1,17 @@
+{
+  "name": "vsytestpro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo",
+    "start": "node server.js"
+  },
+  "author": "me",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "nodemon": "^1.17.1",
+    "socket.io": "^2.0.4"
+  }
+}
