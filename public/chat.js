@@ -32,7 +32,7 @@ socket.on('chat', function(data){                                               
 
 });
 
-socket.on('typing', function(data){                                                             // hier wird das 'typing'(schreiben)
+/*socket.on('typing', function(data){                                                             // hier wird das 'typing'(schreiben)
                                                                                                 //feedback formatiert
     feedback.innerHTML = '<p><em>' + data + ' schreibt...</em><p>';
-});
+});*/

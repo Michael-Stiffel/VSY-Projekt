@@ -1,7 +1,22 @@
 var express = require('express');
 var socket = require('socket.io');
+const cluster = require('cluster');
+const http = require('http');
+const numCPUs = require('os').cpus().length;
 
-//App Setup
+if (cluster.isMaster) {
+  console.log(`Master ${process.pid} is running`);
+
+  // Fork workers.
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`worker ${worker.process.pid} died`);
+  });
+} else {
+    //App Setup
 var app = express();
 var server = app.listen(4000, function(){
     console.log("listening to 4000");
@@ -22,8 +37,13 @@ io.on('connection', function(socket){           //dieser abschnitt wird aufgeruf
 
     });
 
-    socket.on('typing',function(data){          // hier wird auf die Nachricht mit dem Namen 'typing' gewartet
+    /*socket.on('typing',function(data){          // hier wird auf die Nachricht mit dem Namen 'typing' gewartet
         socket.broadcast.emit('typing',data)    // sollte diese eintreffen dann wird der Name des 
                                                 // tippenden wieder ans Front end geschickt
-    });
+    });*/
 });
+
+
+  console.log(`Worker ${process.pid} started`);
+}
+
