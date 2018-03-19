@@ -1,6 +1,7 @@
 //Front End Config 
 //make conection 
 var socket = io.connect('http://192.168.2.113:4000'); //ist der socket fürdas Front end
+var socket = io.connect('http://192.168.2.113:4001');
 
 //Query DOM
 var message = document.getElementById('message'); //hier bekommen die DOM-divs Variablen zugeordnet damit man darauf zugreifen kann
@@ -30,6 +31,10 @@ socket.on('chat', function(data){                                               
     feedback.innerHTML = "";
     output.innerHTML += '<p><strong>' + data.handle + ': </strong>' + data.message + '</p>';
 
+});
+
+socket.on('error', function(data){
+    socket.emit('error', handle.value);
 });
 
 /*socket.on('typing', function(data){                                                             // hier wird das 'typing'(schreiben)

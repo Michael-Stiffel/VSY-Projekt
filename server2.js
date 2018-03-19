@@ -2,6 +2,7 @@ var express = require('express');
 var socket = require('socket.io');
 const http = require('http');
 const cluster = require('cluster');
+var Port = 4001;
 
 /*const numCPUs = require('os').cpus().length;
 
@@ -19,8 +20,8 @@ if (cluster.isMaster) {
 } else {*/
     //App Setup
 var app = express();
-var server = app.listen(4000, function(){
-    console.log("listening to 4000");
+var server = app.listen(Port, function(){
+    console.log(`listening to ${Port}`);
 }); 
 
 //static files 
@@ -34,6 +35,11 @@ io.on('connection', function(socket){           //dieser abschnitt wird aufgeruf
                                                 //und logt dies in die Console mit der Socket Id die Verbunden ist
     
     socket.on('chat', function(data){           // diese wird aufgerufen wenn eine Nachricht mit dem Namen 'chat' ankommt
+        io.sockets.emit('chat',data);           // .emit hat die Parameter name(der Nachicht) und ihren wert/Inhalt/payload
+
+    });
+    socket.on('error', function(data){ 
+        Port =4000;                                         // diese wird aufgerufen wenn eine Nachricht mit dem Namen 'chat' ankommt
         io.sockets.emit('chat',data);           // .emit hat die Parameter name(der Nachicht) und ihren wert/Inhalt/payload
 
     });
